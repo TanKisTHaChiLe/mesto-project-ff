@@ -7,12 +7,14 @@ const cardList = document.querySelector('.places__list');
 
 // @todo: Функция создания карточки
 
-function addCard(cardTitle, cardLink, removeCard) {
+function addCard(item, removeCard) {
     const cardElemnet = cardTemplate.querySelector('.places__item').cloneNode(true);   
-    cardElemnet.querySelector('.card__image').setAttribute('src', cardLink);
-    cardElemnet.querySelector('.card__title').textContent = cardTitle;
+    cardElemnet.querySelector('.card__image').setAttribute('src', item.link);
+    cardElemnet.querySelector('.card__image').setAttribute('alt', item.name);
+    cardElemnet.querySelector('.card__title').textContent = item.name;
     cardElemnet.querySelector('.card__delete-button').addEventListener('click', () => {removeCard(cardElemnet)});
-    cardList.append(cardElemnet);
+    return cardElemnet;
+   
 } 
 
 // @todo: Функция удаления карточки
@@ -23,6 +25,6 @@ function removeCard(element) {
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach(item => {
-    addCard(item.name,item.link, removeCard);
+    cardList.append(addCard(item, removeCard));
 })
 
