@@ -6,82 +6,60 @@ export const cardTemplate = document.querySelector("#card-template").content;
 
 const cardList = document.querySelector(".places__list");
 
-//popup image
-
 const imagePopup = document.querySelector(".popup_type_image");
-
-//обработичк клика по изображению
-
-function hadlerClickImage(image, itemLink, itemName) {
-  image.addEventListener("click", () => {
-    imagePopup.querySelector(".popup__image").setAttribute("src", itemLink);
-    imagePopup.querySelector(".popup__image").setAttribute("alt", itemName);
-    imagePopup.querySelector(".popup__caption").textContent = itemName;
-  });
-  handlerForm(image, imagePopup);
-}
-
-// @todo: Вывести карточки на страницу
-initialCards.forEach((item) => {
-  cardList.append(addCard(item, removeCard, toggleIsActive, hadlerClickImage));
-});
-
-//обработчики закрытия и открытия попапов
-
-function closePopup(popup) {
-  const popupContent = popup.querySelector(".popup__content");
-  const buttonClose = popup.querySelector(".popup__close");
-  buttonClose.addEventListener("click", () => {
-    closeModal(popup);
-    document.removeEventListener("keydown", (evt) => {
-      if (evt.key === "Escape") {
-        closeModal(popup);
-      }
-    });
-  });
-  popup.addEventListener("click", (evt) => {
-    if (!popupContent.contains(evt.target)) {
-      closeModal(popup);
-    }
-  });
-}
-
-function openPopap(buttonOpen, popup) {
-    buttonOpen.addEventListener("click", () => {
-    openModal(popup);
-    document.addEventListener("keydown", (evt) => {
-      if (evt.key === "Escape") {
-        closeModal(popup);
-      }
-    });
-  });
-}
-
-//обработчик формы
-
-function handlerForm(buttonOpen, popup) {
-  openPopap(buttonOpen, popup);
-  closePopup(popup);
-}
-
-//edit-popup
+const popupImage = imagePopup.querySelector(".popup__image");
+const caption = imagePopup.querySelector(".popup__caption");
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 
-handlerForm(profileEditButton, popupTypeEdit);
-
 const editProfileForm = document.forms["edit-profile"];
+const editProfileNameInput = editProfileForm.elements.name;
+const editProfileJobInput = editProfileForm.elements.description;
+
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
-editProfileForm.elements.name.value =
-  document.querySelector(".profile__title").textContent;
-  editProfileForm.elements.description.value = document.querySelector(
-  ".profile__description"
-).textContent;
-const editProfileNameInput = editProfileForm.elements.name;
-const editProfileJobInput = editProfileForm.elements.description;
+const profileAddButton = document.querySelector(".profile__add-button");
+const popupTypeNewCard = document.querySelector(".popup_type_new-card");
+
+const popupNewCardContent = document.querySelector(".popup_type_new-card");
+const newPlaceForm = popupNewCardContent.querySelector(".popup__form");
+const newPlaceNameInput = newPlaceForm.querySelector(
+  ".popup__input_type_card-name"
+);
+const newPlaceJobInput = newPlaceForm.querySelector(".popup__input_type_url");
+
+function hadlerClickImage(image, itemLink, itemName) {
+  image.addEventListener("click", () => {
+    popupImage.setAttribute("src", itemLink);
+    popupImage.setAttribute("alt", itemName);
+    caption.textContent = itemName;
+  });
+  image.addEventListener("click",() => openModal(imagePopup));
+  closeModal(imagePopup);
+}
+
+initialCards.forEach((item) => {
+  cardList.append(addCard(item, removeCard, toggleIsActive, hadlerClickImage));
+});
+
+function openPopupProfile() {
+  editProfileNameInput.value = profileTitle.textContent;
+  editProfileJobInput.value = profileDescription.textContent;
+  openModal(popupTypeEdit);
+}
+
+function closePopupProfile(popup) {
+  const form = popup.querySelector("form");
+  if (form) {
+    form.reset();
+  }
+  closeModal(popup);
+}
+
+profileEditButton.addEventListener("click", openPopupProfile);
+closePopupProfile(popupTypeEdit);
 
 function handleFormSubmitProfile(evt) {
   evt.preventDefault();
@@ -89,28 +67,17 @@ function handleFormSubmitProfile(evt) {
   profileDescription.textContent = editProfileJobInput.value;
   closeModal(popupTypeEdit);
   editProfileForm.reset();
-  editProfileForm.elements.name.value =
-    document.querySelector(".profile__title").textContent;
-    editProfileForm.elements.description.value = document.querySelector(
-    ".profile__description"
-  ).textContent;
 }
 editProfileForm.addEventListener("submit", handleFormSubmitProfile);
 
-//new card popup
-const profileAddButton = document.querySelector(".profile__add-button");
-const popupTypeNewCard = document.querySelector(".popup_type_new-card");
-
-handlerForm(profileAddButton, popupTypeNewCard);
-
-const popupNewCardContent = document.querySelector(".popup_type_new-card");
-const newPlaceForm = popupNewCardContent.querySelector(".popup__form");
-const newPlaceNameInput = newPlaceForm.querySelector(
-  ".popup__input_type_card-name"
-);
-const newPlaceJobInput = newPlaceForm.querySelector(
-  ".popup__input_type_url"
-);
+profileAddButton.addEventListener("click", () => {
+  openModal(popupTypeNewCard);
+  const form = popupTypeNewCard.querySelector(".popup__form");
+  if (form) {
+    form.reset();
+  }
+});
+closeModal(popupTypeNewCard);
 
 function handleFormSubmitCard(evt) {
   evt.preventDefault();
@@ -121,6 +88,7 @@ function handleFormSubmitCard(evt) {
   obj.name = newPlaceNameInput.value;
   obj.link = newPlaceJobInput.value;
   cardList.prepend(addCard(obj, removeCard, toggleIsActive, hadlerClickImage));
+  newPlaceForm.reset();
   closeModal(popupTypeNewCard);
 }
 newPlaceForm.addEventListener("submit", handleFormSubmitCard);

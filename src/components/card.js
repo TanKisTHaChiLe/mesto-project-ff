@@ -4,9 +4,11 @@ export function addCard(item, removeCard, toggleIsActive, hadlerClickImage) {
   const cardElemnet = cardTemplate
     .querySelector(".places__item")
     .cloneNode(true);
-  cardElemnet.querySelector(".card__image").setAttribute("src", item.link);
-  cardElemnet.querySelector(".card__image").setAttribute("alt", item.name);
-  cardElemnet.querySelector(".card__title").textContent = item.name;
+    const card_image = cardElemnet.querySelector(".card__image");
+    const card__title = cardElemnet.querySelector(".card__title");
+    card_image.setAttribute("src", item.link);
+    card_image.setAttribute("alt", item.name);
+    card__title.textContent = item.name;
   //удаление карточки
   cardElemnet
     .querySelector(".card__delete-button")
@@ -18,11 +20,10 @@ export function addCard(item, removeCard, toggleIsActive, hadlerClickImage) {
   likeButton.onclick = () => toggleIsActive(likeButton);
   //обработка клика по изображению
   hadlerClickImage(
-    cardElemnet.querySelector(".card__image"),
+    card_image,
     item.link,
     item.name
   );
-
   return cardElemnet;
 }
 
