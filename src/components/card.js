@@ -1,4 +1,4 @@
-import {cardTemplate}  from "../scripts/index.js"
+import {cardTemplate}  from "./scripts/index.js"
 export function addCard(item, removeCard, toggleIsActive, hadlerClickImage) {
   //создание карточки
   const cardElemnet = cardTemplate

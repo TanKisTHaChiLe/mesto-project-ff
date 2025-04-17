@@ -1,7 +1,7 @@
-import "../pages/index.css";
+import "../../pages/index.css";
 import { initialCards } from "./cards.js";
-import { openModal, closeModal } from "../components/modal.js";
-import { addCard, removeCard, toggleIsActive } from "../components/card.js";
+import { openModal, closeModal } from "../modal.js";
+import { addCard, removeCard, toggleIsActive } from "../card.js";
 export const cardTemplate = document.querySelector("#card-template").content;
 
 const cardList = document.querySelector(".places__list");
