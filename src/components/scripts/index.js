@@ -8,7 +8,7 @@ const cardList = document.querySelector(".places__list");
 
 const imagePopup = document.querySelector(".popup_type_image");
 const popupImage = imagePopup.querySelector(".popup__image");
-const caption = imagePopup.querySelector(".popup__caption");
+const popupCaption = imagePopup.querySelector(".popup__caption");
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupTypeEdit = document.querySelector(".popup_type_edit");
@@ -23,6 +23,8 @@ const profileDescription = document.querySelector(".profile__description");
 const profileAddButton = document.querySelector(".profile__add-button");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
 
+const form = popupTypeNewCard.querySelector(".popup__form");
+
 const popupNewCardContent = document.querySelector(".popup_type_new-card");
 const newPlaceForm = popupNewCardContent.querySelector(".popup__form");
 const newPlaceNameInput = newPlaceForm.querySelector(
@@ -30,15 +32,28 @@ const newPlaceNameInput = newPlaceForm.querySelector(
 );
 const newPlaceJobInput = newPlaceForm.querySelector(".popup__input_type_url");
 
+function setupPopupCloseHandlers(popup) {
+  const popupContent = popup.querySelector(".popup__content");
+  const buttonClose = popup.querySelector(".popup__close");
+  buttonClose.addEventListener("click", () => {
+    closeModal(popup);
+  });
+  popup.addEventListener("click", (evt) => {
+    if (!popupContent.contains(evt.target)) {
+      closeModal(popup);
+    }
+  });
+}
+
 function hadlerClickImage(image, itemLink, itemName) {
   image.addEventListener("click", () => {
     popupImage.setAttribute("src", itemLink);
     popupImage.setAttribute("alt", itemName);
-    caption.textContent = itemName;
+    popupCaption.textContent = itemName;
+    openModal(imagePopup);
   });
-  image.addEventListener("click",() => openModal(imagePopup));
-  closeModal(imagePopup);
 }
+setupPopupCloseHandlers(imagePopup);
 
 initialCards.forEach((item) => {
   cardList.append(addCard(item, removeCard, toggleIsActive, hadlerClickImage));
@@ -50,16 +65,8 @@ function openPopupProfile() {
   openModal(popupTypeEdit);
 }
 
-function closePopupProfile(popup) {
-  const form = popup.querySelector("form");
-  if (form) {
-    form.reset();
-  }
-  closeModal(popup);
-}
-
 profileEditButton.addEventListener("click", openPopupProfile);
-closePopupProfile(popupTypeEdit);
+setupPopupCloseHandlers(popupTypeEdit);
 
 function handleFormSubmitProfile(evt) {
   evt.preventDefault();
@@ -72,12 +79,11 @@ editProfileForm.addEventListener("submit", handleFormSubmitProfile);
 
 profileAddButton.addEventListener("click", () => {
   openModal(popupTypeNewCard);
-  const form = popupTypeNewCard.querySelector(".popup__form");
   if (form) {
     form.reset();
   }
 });
-closeModal(popupTypeNewCard);
+setupPopupCloseHandlers(popupTypeNewCard);
 
 function handleFormSubmitCard(evt) {
   evt.preventDefault();
