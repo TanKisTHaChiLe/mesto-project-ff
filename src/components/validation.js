@@ -43,12 +43,12 @@ export function enableValidation(mapClassesForm){
   function hideInputError(formElement,inputElement,mapClassesForm){
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     errorElement.textContent = '';
+    inputElement.setCustomValidity('');
     errorElement.classList.remove(mapClassesForm.errorClass);
     inputElement.classList.remove(mapClassesForm.inputErrorClass);
   }
   
   function hasInvalidInput(inputs){
-    //inputs.forEach(iterator => console.log(iterator.validity, iterator.value))
     return inputs.every(item => item.validity.valid)
   }
   
@@ -63,19 +63,14 @@ export function enableValidation(mapClassesForm){
       buttonElement.classList.remove(mapClassesForm.inactiveButtonClass);
     }
   }
-  
-  
-  // очистка ошибок валидации вызовом clearValidation
-  
+
 export function clearValidation(formElement, validationConfig){
-    // console.log('1111')
     const inputs = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
     toggleButtonState(inputs, buttonElement, validationConfig);
     inputs.forEach(inputElement => {
 
       hideInputError(formElement,inputElement,validationConfig);
-      //toggleButtonState(inputs, buttonElement, validationConfig);
     })
     toggleButtonState(inputs, buttonElement, validationConfig);
   }
