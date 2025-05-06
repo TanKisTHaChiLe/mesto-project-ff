@@ -2,6 +2,7 @@ import "../../pages/index.css";
 import { initialCards } from "./cards.js";
 import { openModal, closeModal } from "../modal.js";
 import { addCard, removeCard, toggleIsActive } from "../card.js";
+import {clearValidation, enableValidation} from "../validation.js"
 export const cardTemplate = document.querySelector("#card-template").content;
 
 const cardList = document.querySelector(".places__list");
@@ -61,8 +62,11 @@ initialCards.forEach((item) => {
 
 function openPopupProfile() {
   editProfileNameInput.value = profileTitle.textContent;
+  console.log(editProfileNameInput.value)
   editProfileJobInput.value = profileDescription.textContent;
+    clearValidation(editProfileForm,validConfig)
   openModal(popupTypeEdit);
+  //clearValidation(editProfileForm,validConfig)
 }
 
 profileEditButton.addEventListener("click", openPopupProfile);
@@ -79,7 +83,8 @@ editProfileForm.addEventListener("submit", handleFormSubmitProfile);
 
 profileAddButton.addEventListener("click", () => {
   openModal(popupTypeNewCard);
-  if (form) {
+    if (form) {
+    //clearValidation(newPlaceForm,validConfig)
     form.reset();
   }
 });
@@ -98,3 +103,92 @@ function handleFormSubmitCard(evt) {
   closeModal(popupTypeNewCard);
 }
 newPlaceForm.addEventListener("submit", handleFormSubmitCard);
+
+// function enableValidation(mapClassesForm){
+//   const forms = Array.from(document.querySelectorAll('.popup__form'));
+//   forms.forEach(formElement => {
+//     formElement.addEventListener('submit', (evt) => {
+//       evt.preventDefault();
+//     })
+//     setEventListeners(formElement, mapClassesForm)
+//   })
+// }
+
+// function setEventListeners(formElement, mapClassesForm){
+//   const inputs = Array.from(formElement.querySelectorAll(mapClassesForm.inputSelector));
+//   const buttonElement = formElement.querySelector(mapClassesForm.submitButtonSelector);
+//   toggleButtonState(inputs, buttonElement,mapClassesForm);
+//   inputs.forEach(inputElement => {
+//     inputElement.addEventListener('input', () => {
+//       checkInputValidity(formElement, inputElement, mapClassesForm);
+//       toggleButtonState(inputs, buttonElement,mapClassesForm);
+//     })
+//   })
+// }
+
+// function checkInputValidity(formElement, inputElement, mapClassesForm){
+//   if(inputElement.validity.patternMismatch){
+//     inputElement.setCustomValidity(inputElement.getAttribute('data-error'));
+//   }else {
+//     inputElement.setCustomValidity("");
+//   }
+//   if(!inputElement.validity.valid){
+//     showInputError(formElement,inputElement, mapClassesForm, inputElement.validationMessage);
+//   } else{
+//     hideInputError(formElement,inputElement, mapClassesForm);
+//   }
+// }
+
+// function showInputError(formElement, inputElement, mapClassesForm, errorMessage) {
+//   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+//   errorElement.textContent = errorMessage;
+//   errorElement.classList.add(mapClassesForm.errorClass);
+//   inputElement.classList.add(mapClassesForm.inputErrorClass);
+// }
+
+// function hideInputError(formElement,inputElement,mapClassesForm){
+//   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+//   errorElement.textContent = '';
+//   errorElement.classList.remove(mapClassesForm.errorClass);
+//   inputElement.classList.remove(mapClassesForm.inputErrorClass);
+// }
+
+// function hasInvalidInput(inputs){
+//   return inputs.every(item => item.validity.valid)
+// }
+
+// function toggleButtonState(inputs, buttonElement,mapClassesForm){
+//   if(!hasInvalidInput(inputs)){
+//     buttonElement.setAttribute("disabled", "true");
+//     buttonElement.classList.add(mapClassesForm.inactiveButtonClass);
+//   }
+//   else{
+//     buttonElement.removeAttribute("disabled");
+//     buttonElement.classList.remove(mapClassesForm.inactiveButtonClass);
+//   }
+// }
+
+const validConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
+enableValidation(validConfig); 
+
+// очистка ошибок валидации вызовом clearValidation
+
+// function clearValidation(formElement, validationConfig){
+//   console.log('1111')
+//   const inputs = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
+//   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
+//   toggleButtonState(inputs, buttonElement, validationConfig);
+//   console.log(inputs)
+//   inputs.forEach(inputElement => {
+//     hideInputError(formElement,inputElement,validationConfig);
+//   })
+//   toggleButtonState(inputs, buttonElement, validationConfig);
+// }

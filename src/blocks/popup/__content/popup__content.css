@@ -9,6 +9,13 @@
   padding: 34px 36px;
 }
 
+.form__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
 @media screen and (max-width: 568px) {
   .popup__content {
     width: 100%;
