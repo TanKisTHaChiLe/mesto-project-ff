@@ -20,7 +20,7 @@ export const APIUpdateAvatar = (avatar) => {
       }
       return evt.json();
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 };
 
 export const APILikeCard = (method, obj) => {
@@ -34,7 +34,7 @@ export const APILikeCard = (method, obj) => {
       }
       return evt.json();
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 };
 
 export const APIRemoveCard = (obj) => {
@@ -47,7 +47,7 @@ export const APIRemoveCard = (obj) => {
         return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 };
 
 export const APIAddNewCard = (obj) => {
@@ -62,54 +62,55 @@ export const APIAddNewCard = (obj) => {
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 };
 
 const downloadProfile = () => {
-    return fetch(`${config.baseUrl}/users/me`, {
-        headers: config.headers,
-    })  
-    .then(evt=>{
-      if(evt.ok){
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  })
+    .then((evt) => {
+      if (evt.ok) {
         return evt.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
-    }) 
-    .catch(error => console.error(error));
-  }
-  
+    })
+    .catch((error) => console.error(error));
+};
+
 const donwloadCards = () => {
-    return fetch(`${config.baseUrl}/cards`,  {
-        headers: config.headers,
-    })
-    .then(evt => {
-      if(evt.ok){
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
+  })
+    .then((evt) => {
+      if (evt.ok) {
         return evt.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch(error => console.error(error));
-  }
+    .catch((error) => console.error(error));
+};
 
 export const APIDonwloadData = () => {
-    return Promise.all([downloadProfile(),donwloadCards()])
-        .catch(error => console.error(error));
-}
+  return Promise.all([downloadProfile(), donwloadCards()]).catch((error) =>
+    console.error(error)
+  );
+};
 
 export const APIEditingProfile = (name, about) => {
-    return fetch(`${config.baseUrl}/users/me`, {
-        method: 'PATCH',
-        headers: config.headers,
-        body: JSON.stringify({
-          name: name,
-          about: about
-        })
-      })
-      .then(evt => {
-        if(evt.ok){
-          return evt.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch(error => console.error(error));
-}
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      about: about,
+    }),
+  })
+    .then((evt) => {
+      if (evt.ok) {
+        return evt.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((error) => console.error(error));
+};
