@@ -58,7 +58,7 @@ const popupTypeNewAvatar = document.querySelector(".popup_type_new-avatar");
 const buttonNewAvatar = popupTypeNewAvatar.querySelector(".popup__button");
 const inputPopupTypeNewAvatar =
   popupTypeNewAvatar.querySelector(".popup__input");
-const formTypeNewAvatar = popupTypeNewAvatar.querySelector(".popup__form");
+const formTypeNewAvatar = document.forms["new-avatar"];
 
 let userId;
 

@@ -53,9 +53,7 @@ const donwloadCards = () => {
 };
 
 export const APIDonwloadData = () => {
-  return Promise.all([downloadProfile(), donwloadCards()]).catch((error) =>
-    console.error(error)
-  );
+  return Promise.all([downloadProfile(), donwloadCards()]);
 };
 
 export const APIEditingProfile = (name, about) => {

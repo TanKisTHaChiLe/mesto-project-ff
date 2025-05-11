@@ -29,16 +29,23 @@ export function addCard(item, removeCard, likeCard, hadlerClickImage, userId) {
   hadlerClickImage(cardImage, item.link, item.name);
   return cardElemnet;
 }
-
+let deleteHandler = null;
 export function handlerRemoveCard(card, obj) {
   const buttonDeleteCard = card.querySelector(".card__delete-button");
   buttonDeleteCard.addEventListener("click", () => {
+    if (deleteHandler) {
+      buttonConfirmationDeleteCard.removeEventListener("click", deleteHandler);
+    }
     openModal(popupConfirmation);
-    buttonConfirmationDeleteCard.addEventListener("click", () => {
-      APIRemoveCard(obj).catch((error) => console.error(error));
-      closeModal(popupConfirmation);
-      card.remove();
-    });
+    deleteHandler = () => {
+      APIRemoveCard(obj)
+        .then((evt) => {
+          closeModal(popupConfirmation);
+          card.remove();
+        })
+        .catch((error) => console.error(error));
+    };
+    buttonConfirmationDeleteCard.addEventListener("click", deleteHandler);
   });
 }
 
