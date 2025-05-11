@@ -1,0 +1,9 @@
+.count_likes-span {
+    display: block;
+    width: 10px;
+    height: 13px;
+    font-weight: 400;
+    font-size: 13px;
+    font-family: 'Inter', Arial, sans-serif;
+    text-align: center;
+}

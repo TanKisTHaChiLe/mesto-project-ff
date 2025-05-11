@@ -7,6 +7,39 @@
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  position: relative;
+}
+
+.profile__image:hover::after, .profile__image:hover::before{
+  opacity: 1;
+}
+
+.profile__image::after{
+  display: block;
+  position: absolute;
+  opacity: 0;
+  content: '';
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.3s;
+}
+
+.profile__image::before {
+  display: block;
+  position: absolute;
+  opacity: 0;
+  content: '';
+  background-image: url('../../../images/Vector.svg');
+  width: 26px;
+  height: 26px;
+  z-index: 2;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+
 }
 
 @media screen and (max-width: 740px) {

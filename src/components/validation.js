@@ -42,8 +42,8 @@ export function enableValidation(mapClassesForm){
   
   function hideInputError(formElement,inputElement,mapClassesForm){
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    errorElement.textContent = '';
-    inputElement.setCustomValidity('');
+    errorElement.textContent = "";
+    inputElement.setCustomValidity("");
     errorElement.classList.remove(mapClassesForm.errorClass);
     inputElement.classList.remove(mapClassesForm.inputErrorClass);
   }
@@ -53,7 +53,6 @@ export function enableValidation(mapClassesForm){
   }
   
   function toggleButtonState(inputs, buttonElement,mapClassesForm){
-    console.log(hasInvalidInput(inputs),inputs)
     if(!hasInvalidInput(inputs)){
       buttonElement.setAttribute("disabled", "true");
       buttonElement.classList.add(mapClassesForm.inactiveButtonClass);
