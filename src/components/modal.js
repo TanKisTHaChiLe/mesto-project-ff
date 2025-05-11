@@ -14,3 +14,16 @@ function closeEscPopup(evt) {
     closeModal(popup);
   }
 }
+
+export function setupPopupCloseHandlers(popup) {
+  const popupContent = popup.querySelector(".popup__content");
+  const buttonClose = popup.querySelector(".popup__close");
+  buttonClose.addEventListener("click", () => {
+    closeModal(popup);
+  });
+  popup.addEventListener("click", (evt) => {
+    if (!popupContent.contains(evt.target)) {
+      closeModal(popup);
+    }
+  });
+}

@@ -1,5 +1,7 @@
 export function enableValidation(mapClassesForm) {
-  const forms = Array.from(document.querySelectorAll(".popup__form"));
+  const forms = Array.from(
+    document.querySelectorAll(mapClassesForm.formSelector)
+  );
   forms.forEach((formElement) => {
     formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
@@ -87,5 +89,4 @@ export function clearValidation(formElement, validationConfig) {
   inputs.forEach((inputElement) => {
     hideInputError(formElement, inputElement, validationConfig);
   });
-  toggleButtonState(inputs, buttonElement, validationConfig);
 }
