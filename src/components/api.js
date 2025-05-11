@@ -1,3 +1,5 @@
+import { request } from "./utils/handlers-fetch";
+
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wff-cohort-37",
   headers: {
@@ -6,15 +8,6 @@ const config = {
   },
 };
 
-function request(url, options) {
-  return fetch(url, options).then(checkResponse);
-}
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-}
 export const APIUpdateAvatar = (avatar) => {
   return request(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
